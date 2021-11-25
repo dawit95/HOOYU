@@ -25,7 +25,6 @@ const LogoutModal = ({ isModalVisible, setModalVisible, setUserEmoji, setUserPK 
 
   const signOut = async () => {
     GoogleSignin.configure({
-      // scopes: ['https://www.googleapis.com/auth/drive.readonly'],
       webClientId: '5095342969-dcob776t7ckfeu2gddkb2j4ke2cprfst.apps.googleusercontent.com',
     })
     try {
