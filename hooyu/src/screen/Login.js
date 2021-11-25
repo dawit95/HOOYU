@@ -29,9 +29,8 @@ const Login = ({ navigation: { navigate }, deviceHeight, deviceWidth, setUserPK,
 
   useEffect( async () => {
     const front = await Location.getForegroundPermissionsAsync()
-    const back = await Location.getBackgroundPermissionsAsync()
     if (userPK1 !== 0 && userEmoji1) {
-      if (!front.granted && !back.granted) {
+      if (!front.granted) {
         navigation.reset({ routes: [{ name: 'InfoAgree' }] })
       }
       else {

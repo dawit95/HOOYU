@@ -56,16 +56,7 @@ const Main = ({ navigation: { navigate }, deviceWidth, deviceHeight, myRadius, S
   const appState = useRef(AppState.currentState)
   const isInitialMount = useRef(true)
 
-  const FOREGROUND_LOCATION_TASK = 'foreground-location-task'
-  const BACKGROUND_LOCATION_TASK = 'background-location-task'
-
   useEffect(() => {
-    api.setUserAlived()
-      .then(() => {
-      })
-      .catch((err) => {
-        console.log(err)
-      })
     const initialPermission = async () => {
       await requestPermission()
       AppState.addEventListener('change', handleAppStateChange)
@@ -76,15 +67,9 @@ const Main = ({ navigation: { navigate }, deviceWidth, deviceHeight, myRadius, S
       AsyncStorage.getItem('access_token', async (err, result) => {
         if (result) {
           api.setUserKilled()
-            .catch((err) => {
-              console.log(err)
-            })
-        }
-        else {
-          const isTaskStarted = await Location.hasStartedLocationUpdatesAsync(FOREGROUND_LOCATION_TASK)
-          if (isTaskStarted) {
-            await Location.stopLocationUpdatesAsync(FOREGROUND_LOCATION_TASK)
-          }
+          .catch((err) => {
+            console.log(err)
+          })
         }
       })
     }
@@ -94,7 +79,7 @@ const Main = ({ navigation: { navigate }, deviceWidth, deviceHeight, myRadius, S
     if (isInitialMount.current) {
       isInitialMount.current = false
     } else {
-      instantGetLocation('active')
+      instantGetLocation()
     }
   }, [myRadius, userEmoji])
 
@@ -103,22 +88,27 @@ const Main = ({ navigation: { navigate }, deviceWidth, deviceHeight, myRadius, S
       appState.current.match(/inactive|background/) &&
       nextAppState === 'active'
     ) {
-      instantGetLocation('active')
+      api.setUserAlived()
+      .catch((err) => {
+        console.log(err)
+      })
     }
     if (
       appState.current.match(/inactive|active/) &&
       nextAppState === 'background'
     ) {
-      instantGetLocation('background')
+      api.setUserKilled()
+      .catch((err) => {
+        console.log(err)
+      })
     }
     appState.current = nextAppState
   }
 
   const requestPermission = async () => {
     const front = await Location.requestForegroundPermissionsAsync()
-    const back = await Location.requestBackgroundPermissionsAsync()
-    if (front.granted && back.granted) {
-      instantGetLocation('active')
+    if (front.granted) {
+      getLocation()
     } else {
       Alert.alert(
         '서비스 이용 알림',
@@ -132,39 +122,11 @@ const Main = ({ navigation: { navigate }, deviceWidth, deviceHeight, myRadius, S
     }
   }
 
-  TaskManager.defineTask(FOREGROUND_LOCATION_TASK, ({ data, error }) => {
-    if (error) {
-      console.log(error.message)
-      return
-    }
-    if (data) {
-      const { locations } = data
-      getUsers(locations[0].coords.latitude, locations[0].coords.longitude)
-    }
-  })
-
-  TaskManager.defineTask(BACKGROUND_LOCATION_TASK, ({ data, error }) => {
-    if (error) {
-      console.log(error.message)
-      return
-    }
-    if (data) {
-      const { locations } = data
-      getUsers(locations[0].coords.latitude, locations[0].coords.longitude)
-    }
-  })
-
-  const instantGetLocation = async (status) => {
+  const instantGetLocation = async () => {
     const front = await Location.getForegroundPermissionsAsync()
-    const back = await Location.getBackgroundPermissionsAsync()
-    if (front.granted && back.granted) {
+    if (front.granted) {
       const data = await Location.getCurrentPositionAsync({ accuracy: Location.Accuracy.high })
       getUsers(data.coords.latitude, data.coords.longitude)
-      if (status == 'active') {
-        activeGetLocation()
-      } else {
-        backgroundGetLocation()
-      }
     } else {
       Alert.alert(
         '서비스 이용 알림',
@@ -178,38 +140,28 @@ const Main = ({ navigation: { navigate }, deviceWidth, deviceHeight, myRadius, S
     }
   }
 
-  const activeGetLocation = async () => {
-    const isTaskStarted = await Location.hasStartedLocationUpdatesAsync(BACKGROUND_LOCATION_TASK)
-    if (isTaskStarted) {
-      await Location.stopLocationUpdatesAsync(BACKGROUND_LOCATION_TASK)
+  const getLocation = async () => {
+    const front = await Location.getForegroundPermissionsAsync()
+    if (front.granted) {
+      await Location.watchPositionAsync(
+        {
+          accuracy: Location.Accuracy.High,
+          timeInterval: 10000,
+          distanceInterval: 0,
+        },
+        data => getUsers(data.coords.latitude, data.coords.longitude)
+      )
+    } else {
+      Alert.alert(
+        '서비스 이용 알림',
+        '필수 권한을 허용해야 서비스 정상 이용이 가능합니다. 설정에서 설정해주세요.',
+        [
+          {
+            text: "확인",
+            onPress: () => BackHandler.exitApp()
+          }
+        ])
     }
-    await Location.startLocationUpdatesAsync(FOREGROUND_LOCATION_TASK, {
-      accuracy: Location.Accuracy.High,
-      distanceInterval: 0,
-      timeInterval: 10000,
-      foregroundService: {
-        notificationTitle: 'Hooyu',
-        notificationBody: '당신의 반경을 탐색하는중...',
-        notificationColor: '#FF6A77'
-      }
-    })
-  }
-
-  const backgroundGetLocation = async () => {
-    const isTaskStarted = await Location.hasStartedLocationUpdatesAsync(FOREGROUND_LOCATION_TASK)
-    if (isTaskStarted) {
-      await Location.stopLocationUpdatesAsync(FOREGROUND_LOCATION_TASK)
-    }
-    await Location.startLocationUpdatesAsync(BACKGROUND_LOCATION_TASK, {
-      accuracy: Location.Accuracy.High,
-      distanceInterval: 0,
-      timeInterval: 60000,
-      foregroundService: {
-        notificationTitle: 'Hooyu',
-        notificationBody: '당신의 반경을 탐색하는중...',
-        notificationColor: '#FF6A77'
-      }
-    })
   }
 
   const getUsers = (latitude, longitude) => {
