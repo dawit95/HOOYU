@@ -32,19 +32,10 @@ const InfoAgree = ({ navigation: { navigate }, deviceWidth }) => {
             </View>
             <View>
               <Text style={{fontSize: deviceWidth * 0.03, fontWeight: 'bold', marginBottom:4 }}>위치 정보</Text>
-              <Text style={{fontSize: deviceWidth * 0.03,}}>위치 정보는 주변 사용자들을 탐지하는데{'\n'}필요한 필수 정보로 활용됩니다.</Text>
+              <Text style={{fontSize: deviceWidth * 0.03,}}>위치 정보는 앱이 실행되는 동안에만 수집되며,{'\n'}주변 사용자들을 탐지하는데 필요한 필수 정보로{'\n'}활용됩니다. </Text>
             </View>
           </View>
-          <View style={{ flexDirection: "row", width: '100%', marginTop: 15 }}>
-            <View style={{ justifyContent: 'center', paddingRight: 15 }}>
-              <Entypo name="globe" size={24} color="black" />
-            </View>
 
-            <View>
-              <Text style={{fontSize: deviceWidth * 0.03, fontWeight: 'bold', marginBottom:4 }}>백그라운드 권한</Text>
-              <Text style={{fontSize: deviceWidth * 0.03,}}>후유는 앱이 사용되지 않을 때도 사용자의{`\n`}현재 위치 갱신 및 위치를 기반으로 화면 상{`\n`}유저 표시와 푸시알림 기능을 제공하기 위해{`\n`}위치 데이터를 수집합니다.</Text>
-            </View>
-          </View>
           <View style={{ width: '100%', marginTop: 20 }}>
             <Text style={{ fontSize: deviceWidth * 0.035,fontWeight: 'bold', color: '#FF6A77' }}>선택 접근 권한</Text>
           </View>

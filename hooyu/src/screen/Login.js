@@ -28,10 +28,10 @@ const Login = ({ navigation: { navigate }, deviceHeight, deviceWidth, setUserPK,
   const navigation = useNavigation()
 
   useEffect( async () => {
+    console.log("불렸다!")
     const front = await Location.getForegroundPermissionsAsync()
-    const back = await Location.getBackgroundPermissionsAsync()
     if (userPK1 !== 0 && userEmoji1) {
-      if (!front.granted && !back.granted) {
+      if (!front.granted) {
         navigation.reset({ routes: [{ name: 'InfoAgree' }] })
       }
       else {
@@ -41,12 +41,14 @@ const Login = ({ navigation: { navigate }, deviceHeight, deviceWidth, setUserPK,
       navigation.reset({ routes: [{ name: 'NicknameTutorial' }] })
     } else {
       GoogleSignin.configure({
-        scopes: ['https://www.googleapis.com/auth/drive.readonly'],
+        // scopes: ['https://www.googleapis.com/auth/drive.readonly'],
         webClientId: '5095342969-dcob776t7ckfeu2gddkb2j4ke2cprfst.apps.googleusercontent.com',
       })
       isSignedIn()
     }
-  }, [userPK1 ,userEmoji1])
+  }, [userPK1])
+
+
 
   const isSignedIn = async () => {
     const isSignedIn = await GoogleSignin.isSignedIn()
@@ -78,9 +80,9 @@ const Login = ({ navigation: { navigate }, deviceHeight, deviceWidth, setUserPK,
         .then((res) => {
           setUserEmoji(res.data.success.emoji)
           setUserEmoji1(res.data.success.emoji)
-          setUserPK1(res.data.success.id)
           setUserName(res.data.success.name)
           setPushSetting(res.data.success.acceptPush, res.data.success.acceptRadius, res.data.success.acceptSync)
+          setUserPK1(res.data.success.id)
         })
     } catch (error) {
       if (error.code === statusCodes.SIGN_IN_REQUIRED) {
