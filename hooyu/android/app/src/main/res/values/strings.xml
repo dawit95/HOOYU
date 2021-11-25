@@ -1,0 +1,5 @@
+<resources>
+    <string name="app_name">whoyouapp</string>
+    <string name="fcm_message">fcm_message</string>
+    <string name="default_notification_channel_id">channel_id</string>
+</resources>

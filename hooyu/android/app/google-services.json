@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "5095342969",
+    "project_id": "whoyouapp-9ca01",
+    "storage_bucket": "whoyouapp-9ca01.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:5095342969:android:30cb48fd1f3a9dae33e5a8",
+        "android_client_info": {
+          "package_name": "com.whoyouapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "5095342969-jv5mooihng45pjrr3ih83685tu33kde3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.whoyouapp",
+            "certificate_hash": "5e8f16062ea3cd2c4a0d547876baa6f38cabf625"
+          }
+        },
+        {
+          "client_id": "5095342969-dcob776t7ckfeu2gddkb2j4ke2cprfst.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUkchpqVWjMDn30qd7lI-q0h6_DpsdVrg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "5095342969-dcob776t7ckfeu2gddkb2j4ke2cprfst.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
