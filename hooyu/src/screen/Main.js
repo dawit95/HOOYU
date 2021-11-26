@@ -391,13 +391,13 @@ const Main = ({ navigation: { navigate }, deviceWidth, deviceHeight, myRadius, S
                 <View style={{ top: -deviceWidth * 0.06, marginRight: deviceWidth * 0.05, transform: [{ rotate: '30deg' }] }}>
                   <View style={{ position: "absolute", left: 0, backgroundColor: mainColor7, width: 2, height: "100%" }}></View>
                   <View style={{ position: "absolute", right: 0, backgroundColor: mainColor7, width: 2, height: "100%" }}></View>
-                  <Text style={{ color: mainColor6, paddingRight: 5, paddingLeft: 5 }}>20m</Text>
+                  <Text style={{ color: mainColor6, paddingRight: 5, paddingLeft: 5 }}> 20m </Text>
                 </View>
               }
               {
                 myRadius != 20 &&
                 <View style={{ top: -deviceWidth * 0.06, marginRight: deviceWidth * 0.05, transform: [{ rotate: '30deg' }] }}>
-                  <Text onPress={() => setMyRadius(20)} style={{ color: mainColor5, paddingRight: 5, paddingLeft: 5 }}>20m</Text>
+                  <Text onPress={() => setMyRadius(20)} style={{ color: mainColor5, paddingRight: 5, paddingLeft: 5 }}> 20m </Text>
                 </View>
               }
               {
@@ -433,13 +433,13 @@ const Main = ({ navigation: { navigate }, deviceWidth, deviceHeight, myRadius, S
                 <View style={{ top: -deviceWidth * 0.06, transform: [{ rotate: '-30deg' }] }}>
                   <View style={{ position: "absolute", left: 0, backgroundColor: mainColor7, width: 2, height: "100%" }}></View>
                   <View style={{ position: "absolute", right: 0, backgroundColor: mainColor7, width: 2, height: "100%" }}></View>
-                  <Text style={{ color: mainColor6, paddingRight: 5, paddingLeft: 5 }}>2km</Text>
+                  <Text style={{ color: mainColor6, paddingRight: 5, paddingLeft: 5 }}>30km</Text>
                 </View>
               }
               {
                 myRadius != 30000 &&
                 <View style={{ top: -deviceWidth * 0.06, transform: [{ rotate: '-30deg' }] }}>
-                  <Text onPress={() => setMyRadius(30000)} style={{ color: mainColor5, paddingRight: 5, paddingLeft: 5 }}>2km</Text>
+                  <Text onPress={() => setMyRadius(30000)} style={{ color: mainColor5, paddingRight: 5, paddingLeft: 5 }}>30km</Text>
                 </View>
               }
             </View>
