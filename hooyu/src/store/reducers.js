@@ -9,6 +9,7 @@ const defaultState = {
   deviceHeight: StatusBar.currentHeight > 24 ? Dimensions.get('window').height : Dimensions.get('window').height - StatusBar.currentHeight,
   myRadius: 30000,
   SERVER_URL: 'https://k5a101.p.ssafy.io/api/v1/',
+  // SERVER_URL: 'https://hooyu.kr/api/v1/',
   userPK: 0,
   userEmoji: 'none',
   userName: '',

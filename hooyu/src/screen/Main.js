@@ -22,6 +22,8 @@ import * as Location from 'expo-location'
 import * as emojiImages from '../assets/images'
 import api from '../utils/api'
 
+import CompassHeading from 'react-native-compass-heading'
+
 
 const date = new Date()
 
@@ -50,6 +52,7 @@ const Main = ({ navigation: { navigate }, deviceWidth, deviceHeight, myRadius, S
   const [selectedPrivateZoneUser, setSelectedPrivateZoneUser] = useState(-1)
   const [mainListSortMode, setMainListSortMode] = useState('distance')
   const [isListOpened, setIsListOpened] = useState(false)
+  const [compassHeading, setCompassHeading] = useState(0)
 
   const mainListRef = useRef()
   const shelterListRef = useRef()
@@ -62,7 +65,12 @@ const Main = ({ navigation: { navigate }, deviceWidth, deviceHeight, myRadius, S
       AppState.addEventListener('change', handleAppStateChange)
     }
     initialPermission()
+    const degree_update_rate = 5
+    CompassHeading.start(degree_update_rate, degree => {
+      setCompassHeading(degree)
+    })
     return async () => {
+      CompassHeading.stop()
       AppState.removeEventListener('change', handleAppStateChange)
       AsyncStorage.getItem('access_token', async (err, result) => {
         if (result) {
@@ -492,9 +500,17 @@ const Main = ({ navigation: { navigate }, deviceWidth, deviceHeight, myRadius, S
                   </LinearGradient>
                 }
                 <TouchableOpacity
+                  //이모지
                   style={{
-                    left: radarX + radarWidth / 2 - deviceWidth * 0.03 + (radarWidth / 2 * user.distDto.xdist / (myRadius * 115 / 100)),
-                    top: radarY + radarWidth / 2 - deviceWidth * 0.03 + (radarWidth / 2 * user.distDto.ydist / (myRadius * 115 / 100)),
+                    left: radarX + radarWidth / 2 - deviceWidth * 0.03 + 
+                    // 반지름을 구하고, 원래 각도 세타를 구하고, rotate된 compass 세타를 더해서 다시 x,y 뽑
+                    (radarWidth / 2 
+                      * user.distDto.dist*Math.cos(Math.atan(user.distDto.ydist/user.distDto.xdist) + compassHeading*Math.PI/180)
+                       / (myRadius * 115 / 100)),
+                    top: radarY + radarWidth / 2 - deviceWidth * 0.03 + 
+                    (radarWidth / 2 
+                      * user.distDto.dist*Math.sin(Math.atan(user.distDto.ydist/user.distDto.xdist) + compassHeading*Math.PI/180)
+                      / (myRadius * 115 / 100)),
                     position: 'absolute',
                     elevation: index == selectedUser ? 7 : 5,
                   }}
