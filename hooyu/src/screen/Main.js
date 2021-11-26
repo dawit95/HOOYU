@@ -505,11 +505,17 @@ const Main = ({ navigation: { navigate }, deviceWidth, deviceHeight, myRadius, S
                     left: radarX + radarWidth / 2 - deviceWidth * 0.03 + 
                     // 반지름을 구하고, 원래 각도 세타를 구하고, rotate된 compass 세타를 더해서 다시 x,y 뽑
                     (radarWidth / 2 
-                      * user.distDto.dist*Math.cos(Math.atan(user.distDto.ydist/user.distDto.xdist) + compassHeading*Math.PI/180)
-                       / (myRadius * 115 / 100)),
+                      * user.distDto.dist*Math.cos(Math.atan(
+                      user.distDto.xdist ? user.distDto.ydist/user.distDto.xdist : 
+                      user.distDto.ydist >= 0 ? Math.PI/2 : 3*Math.PI/2
+                      ) + compassHeading*Math.PI/180)
+                      / (myRadius * 115 / 100)),
                     top: radarY + radarWidth / 2 - deviceWidth * 0.03 + 
                     (radarWidth / 2 
-                      * user.distDto.dist*Math.sin(Math.atan(user.distDto.ydist/user.distDto.xdist) + compassHeading*Math.PI/180)
+                      * user.distDto.dist*Math.sin(Math.atan(
+                      user.distDto.xdist ? user.distDto.ydist/user.distDto.xdist : 
+                      user.distDto.ydist >= 0 ? Math.PI/2 : 3*Math.PI/2
+                      ) + compassHeading*Math.PI/180)
                       / (myRadius * 115 / 100)),
                     position: 'absolute',
                     elevation: index == selectedUser ? 7 : 5,
