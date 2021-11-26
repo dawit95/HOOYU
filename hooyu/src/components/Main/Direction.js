@@ -27,7 +27,7 @@ const Direction = ({radarWidth}) => {
         width: radarWidth + 40,
         height: radarWidth + 40,
         alignItems: 'center',
-        transform: [{rotate: `${360 - compassHeading.heading}deg`}]
+        transform: [{rotate: `${360+compassHeading.heading}deg`}]
       }}
     >
       <SimpleLineIcons name="arrow-up" size={30} color="white" style={{position:'absolute',top:0, opacity:0.7}}/>

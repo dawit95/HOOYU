@@ -3,7 +3,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import jwt_decode from "jwt-decode"
 
 
-axios.defaults.baseURL = "https://k5a101.p.ssafy.io/api/v1/"
+axios.defaults.baseURL = "https://hooyu.kr/api/v1/"
+// axios.defaults.baseURL = "https://k5a101.p.ssafy.io/api/v1/"
 axios.defaults.headers.post["Content-Type"] = "application/json"
 
 axios.interceptors.request.use(
