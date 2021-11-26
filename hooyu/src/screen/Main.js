@@ -302,45 +302,49 @@ const Main = ({ navigation: { navigate }, deviceWidth, deviceHeight, myRadius, S
                 <Text style={styles.radar__text__count}>{users.length}</Text>
               </View>
             }
-            <TouchableOpacity
+            <View
               style={[styles.shelterArea, {top: isListOpened ? deviceHeight * 0.173 - 30 : deviceHeight * 0.175}]}
-              disabled={myRadius === 500 || myRadius === 30000 ? false : true}
-              onPress={() => {
-                mainListRef.current.close()
-                shelterListRef.current.open()
-                setIsListOpened(true)
-              }}
             >
-              <View >
-                <Image
-                  source={shelter}
-                  style={[
-                    styles.shelterImage,
-                    {
-                      opacity: myRadius === 500 || myRadius === 30000 ? 1 : 0.2
-                    }
-                  ]}
-                ></Image>
-                <View
-                  style={[
-                    styles.shelterCount,
-                    {
-                      opacity: myRadius === 500 || myRadius === 30000 ? 1 : 0
-                    }
-                  ]}
-                >
-                  <Text
-                    style={{
-                      color: 'white',
-                      fontSize: 12,
-                      fontWeight: 'bold',
-                    }}
+              <TouchableOpacity
+                style={{ top: deviceHeight * 0.035 }}
+                disabled={myRadius === 500 || myRadius === 30000 ? false : true}
+                onPress={() => {
+                  mainListRef.current.close()
+                  shelterListRef.current.open()
+                  setIsListOpened(true)
+                }}
+              >
+                <View >
+                  <Image
+                    source={shelter}
+                    style={[
+                      styles.shelterImage,
+                      {
+                        opacity: myRadius === 500 || myRadius === 30000 ? 1 : 0.2
+                      }
+                    ]}
+                  ></Image>
+                  <View
+                    style={[
+                      styles.shelterCount,
+                      {
+                        opacity: myRadius === 500 || myRadius === 30000 ? 1 : 0
+                      }
+                    ]}
                   >
-                    {privateZoneUsers.length}
-                  </Text>
+                    <Text
+                      style={{
+                        color: 'white',
+                        fontSize: 12,
+                        fontWeight: 'bold',
+                      }}
+                    >
+                      {privateZoneUsers.length}
+                    </Text>
+                  </View>
                 </View>
-              </View>
-            </TouchableOpacity>
+              </TouchableOpacity>
+            </View>
             <View
               style={styles.rader}
               onLayout={({ target }) => {
