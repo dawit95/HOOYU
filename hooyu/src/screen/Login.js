@@ -28,7 +28,6 @@ const Login = ({ navigation: { navigate }, deviceHeight, deviceWidth, setUserPK,
   const navigation = useNavigation()
 
   useEffect( async () => {
-    console.log("불렸다!")
     const front = await Location.getForegroundPermissionsAsync()
     if (userPK1 !== 0 && userEmoji1) {
       if (!front.granted) {
@@ -54,9 +53,6 @@ const Login = ({ navigation: { navigate }, deviceHeight, deviceWidth, setUserPK,
     const accessToken = await AsyncStorage.getItem('access_token')
     if (accessToken) {
       await getCurrentUserInfo()
-      setTimeout(() => {
-        setGettingLoginStatus(false)
-      }, 1000)
     }
     setGettingLoginStatus(false)
   }
@@ -133,7 +129,7 @@ const Login = ({ navigation: { navigate }, deviceHeight, deviceWidth, setUserPK,
     return (
       <SafeAreaView style={{ flex: 1, backgroundColor: '#FF6A77' }}>
         <View style={{ flex: 0.7, justifyContent: "center", alignItems: "center" }}>
-          <View style={{}}>
+          <View>
             <Image
               source={images.logo}
               style={{ width: deviceWidth * 0.5, height: deviceWidth * 0.5 }}
