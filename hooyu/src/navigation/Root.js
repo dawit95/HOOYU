@@ -33,13 +33,10 @@ const Root = ({ setUserPK, setUserEmoji, setUserName }) => {
   const [emoji, setEmoji] = useState(null)
 
   const [front, setFront] = useState(false)
-  const [back, setBack] = useState(false)
 
   useEffect(async () => {
     const front1 = await Location.getForegroundPermissionsAsync()
-    const back1 = await Location.getBackgroundPermissionsAsync()
     setFront(front1.granted)
-    setBack(back1.granted)
     AsyncStorage.getItem('access_token', async (err, result) => {
       if (result) {
         setUserPK(jwt_decode(result).pk)
@@ -68,7 +65,7 @@ const Root = ({ setUserPK, setUserEmoji, setUserName }) => {
 
   return (
     <Nav.Navigator
-      initialRouteName={(accessToken && emoji && front && back) ? "Main" : (accessToken && emoji ? "InfoAgree" : ((accessToken) ? "NicknameTutorial" : "Login"))}
+      initialRouteName={(accessToken && emoji && front) ? "Main" : (accessToken && emoji ? "InfoAgree" : ((accessToken) ? "NicknameTutorial" : "Login"))}
       screenOptions={{
         headerShown: false,
         animation: 'slide_from_right',
